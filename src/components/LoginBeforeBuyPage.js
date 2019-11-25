@@ -29,7 +29,7 @@ class LoginBeforeBuyPage extends Component {
         
     }
 
-    static getDerivedStateFromProps(nextProps){         
+    static getDerivedStateFromProps(nextProps){
         return{
             product: nextProps.cartProduct
         } 

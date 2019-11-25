@@ -128,8 +128,7 @@ app.get('/user/login', (req, res) => {
     })
 })
 
-app.post('/add-product', (req, res) => {
-        
+app.post('/add-product', (req, res) => {        
     upload(req, res, function (err) {
     
         if (err instanceof multer.MulterError) {
@@ -138,7 +137,7 @@ app.post('/add-product', (req, res) => {
             return res.status(500).json(err)
         }
     
-        const{ name, desc, type, price, offer, brand, discount, message, category, file, filename } = req.body
+        const{ name, desc, type, price, offer, brand, discount, message, category, file, filename } = req.query
         let file_name = cur_time + "_" + filename        
         const INSERT_PRODUCT = `INSERT INTO flipkart_products (name, image, brand, category, type, description, price, discount, offer, message) VALUES ("${name}", "${file_name}", "${brand}", "${category}", "${type}", "${desc}", ${price}, "${discount}", "${offer}", "${message}")`
 
@@ -147,7 +146,7 @@ app.post('/add-product', (req, res) => {
                 return res.send(error)
             }else{
                 return res.send('Success')                
-                return res.status(200).send(req.file)
+                // return res.status(200).send(req.file)
             }
         })        
     })      
@@ -221,9 +220,15 @@ app.post('/edit-user', (req, res) => {
     
     connection.query(UPDATE_USER, (error, result) => {
         if(error){
-            return res.send(error)
+            return res.json({
+                data: error,
+                status: false
+            })            
         }else{
-            return res.send('User Updated Successfully')
+            return res.json({
+                data: 'User Updated Successfully',
+                status: true
+            })        
         }
     })
 })

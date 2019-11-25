@@ -1,19 +1,32 @@
 import React, { Component } from 'react'
 import FlipkartLogo from './FlipkartLogo'
-import { Link } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
+
 
 class CongratulationPage extends Component {
 
     constructor(props) {
         super(props)
+
+        this.state = ({
+            redirect: false
+        })
     
         localStorage.removeItem('cartProducts')
         localStorage.removeItem('quantity')
         localStorage.removeItem('itemsInCart')
     }
+
+    componentDidMount() {
+        setTimeout(() => 
+            this.setState({ redirect: true }), 
+        2000)
+    }
     
     render() {
         return (
+            this.state.redirect ? 
+            <Redirect to='/' /> :
             <div id="container">
                 <div className="_3ybBIU">                
                     <div className="_1tz-RS">

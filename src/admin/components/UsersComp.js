@@ -4,6 +4,7 @@ import SearchComponent from '../../components/SearchComponent'
 import axios from 'axios'
 import { BASE_URL } from '../../static_data/constants'
 import TableRow from './TableRow'
+import ProductLink from './ProductLink'
 
 class UsersComp extends Component {
 
@@ -39,7 +40,8 @@ class UsersComp extends Component {
                         <div className="_1S7OK2"></div>
                         <div className="_3pNZKl">
                             <FlipkartLogo />
-                            <SearchComponent />                                      
+                            <SearchComponent />
+                            {/* <ProductLink /> */}
                         </div>
                         <div className="_1S7OK2"></div>
                     </div>

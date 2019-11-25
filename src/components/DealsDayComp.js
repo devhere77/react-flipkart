@@ -19,26 +19,18 @@ class DealsDayComp extends Component  {
         .then(response => {
             this.setState({dealsproduct: response.data.data})        
         })
-        .catch(error => { console.error(error) })              
+        .catch(error => { console.error(error) })            
     }
 
     render(){
-    const type = "deals"    
+    const type = "deals"
         return (
             <div className="_1HmYoV hCUpcT">
                 <div className="bhgxx2" style={{flexGrow:1, overflow:"auto", padding:"0px 0px 10px 0px"}}>
                     <div className="_1GRhLX _3JslKL">
                         <div className="_1dPkhG">
                             <div>
-                                <h2 className="puxlXr">Deals of the Day</h2>
-                                {/* <div className="Yg3scO">
-                                    <img className="_2iEw0G" alt="" src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/timer_931251.svg" height="24" width="24" />
-                                        <span>
-                                            <span>
-                                                <span>00 : </span><span>10 : </span><span>45</span> 
-                                            </span>Left
-                                        </span>
-                                </div> */}
+                                <h2 className="puxlXr">Deals of the Day</h2>                                
                                 <div className="_2Umlwf">                                    
                                     <Link to={"/view-all/" + type} className="_2AkmmA _1eFTEo">VIEW ALL</Link>
                                 </div>

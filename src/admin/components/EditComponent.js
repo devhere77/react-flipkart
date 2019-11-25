@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { BASE_URL } from '../../static_data/constants'
+import { Redirect } from 'react-router-dom'
 
 class EditComponent extends Component {
 
@@ -9,7 +10,10 @@ class EditComponent extends Component {
     
         this.state = {
             fname: '',
-            email: ''
+            email: '',
+            message: '',
+            status: false,
+            comp: ''
         }
     }
 
@@ -32,19 +36,29 @@ class EditComponent extends Component {
 
     handleEditForm = (e) => {
         e.preventDefault()        
-        axios.post(BASE_URL + `edit-user?id=${this.props.id}&name=${this.state.fname}&email=${this.state.email}`)        
+        axios.post(BASE_URL + `edit-user?id=${this.props.id}&name=${this.state.fname}&email=${this.state.email}`)
         .then(response => {
-            console.log(response)
-            this.setState({
-                message: response.data
-            })
+                this.setState({
+                    message: response.data.data,
+                    status: response.data.status
+                })
         })
         .catch(error => {
-            console.error(error)        
+            console.error(error)
         }) 
+                
     }
     
     render() {
+        if(this.state.status === true){        
+            let comp = <Redirect to='/admin/userlist' />
+            setTimeout(() => {
+                this.setState({
+                    comp: comp
+                })                
+            }, 2000)
+        }
+
         return (
             <div className="t-0M7P _27IFdQ">
                 <div className="_1VV5Cf _1QHAXj">
@@ -81,25 +95,14 @@ class EditComponent extends Component {
                                             <label className="b5konl">
                                                 <span>Enter Email</span>
                                             </label>
-                                        </div>
-                                        {/* <div className="_39M2dM JB4AMj">
-                                            <input type="password" name="password" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.password} onChange={this.handleData} required/>
-                                            <span className="s-YM1W"></span>
-                                            <label className="b5konl">
-                                                <span>Enter Password</span>
-                                            </label>
-                                        </div>
-                                        <div className="_39M2dM JB4AMj">
-                                            <input type="password" name="con_pwd" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.con_pwd} onChange={this.handleData} required/>
-                                            <span className="s-YM1W"></span>
-                                            <label className="b5konl">
-                                                <span>Confirm Password</span>
-                                            </label>
-                                            <span>{this.state.pwd_error}</span>
-                                        </div>                                             */}
-                                        <span>{this.state.message}</span>
+                                        </div>                                        
+                                        
+                                        <span>{this.state.message}
+                                        {
+                                            this.state.status ? this.state.comp : ''
+                                        }
+                                        </span>
+
                                         <div className="_1avdGP">
                                             <button className="_2AkmmA _1LctnI _7UHT_c" type="submit">
                                                 <div className="_2VTdOs _1_qmw3">

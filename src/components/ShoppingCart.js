@@ -36,11 +36,10 @@ class ShoppingCart extends Component {
         }else{
             custId = custId
         }
-
-        this.props.getCartItems({custId: custId})
+        
     }
     
-    static getDerivedStateFromProps(nextProps){        
+    static getDerivedStateFromProps(nextProps){
         console.log(nextProps)
         return{
             product: nextProps.cartProduct
@@ -53,6 +52,7 @@ class ShoppingCart extends Component {
         if(token !== null){
             this.props.userLogin(true)
         }        
+        this.props.getCartItems({custId: custId})
     }
 
     incrementCount = () => {                

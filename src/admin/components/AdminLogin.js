@@ -1,45 +1,52 @@
 import React, { Component } from 'react'
-import { loginUserAPI } from '../action/getUser'
-import { connect } from 'react-redux'
+import FlipkartLogo from '../../components/FlipkartLogo'
+import { withRouter } from 'react-router-dom'
 
-class LoginSignupPopup extends Component {
-    
+
+export class AdminLogin extends Component {
+
     constructor(props) {
         super(props)
     
         this.state = {
-            email:'',
-            password: '',            
-        }        
-
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleLogin = this.handleLogin.bind(this)        
+            email: '',
+            password: ''
+        }
     }
 
-    handleInputChange = (e) => {
+    handleInput = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
-    handleLogin = (e) =>  {
+    handleAdminLogin = (e) => {
         e.preventDefault()
-        if(this.state.email === 'admin@gmail.com' && this.state.password === 'admin'){
-            this.props.history.push('/admin')
-        }else{
-            const data = {email: this.state.email, password: this.state.password}
-            this.props.loginUserAPI(data);
-        }    
+        const { email, password } = this.state
+        
+        if(email === 'admin@gmail.com' && password === 'admin'){
+            this.props.history.push('/admin/add-product')
+        }
     }
     
-
-    render(){        
+    render() {
         return (
-            <div className="mCRfo9">
-                <div className="_2ISNhP _3AOFWO" tabIndex="-1">
-                    <div className="_3Njdz7" style={{marginTop: "700px"}}>
-                        <button className="_2AkmmA _29YdH8 close" onClick={this.props.close}>✕</button>
-                        <div className="_32LSmx">
+            <div id="container">
+                <div className="_3ybBIU">                
+                    <div className="_1tz-RS">
+                        <div className="_1S7OK2"></div>
+                        <div className="_3pNZKl">
+                            <FlipkartLogo />                                                     
+                        </div>
+                        <div className="_1S7OK2"></div>
+                    </div>
+                    <div className="_2hlh_L"></div>
+                </div>            
+                {/* <div className="mCRfo9">
+                <div className="_2ISNhP _3AOFWO" tabIndex="-1"> */}
+                    <div className="_3Njdz7">
+                        {/* <button className="_2AkmmA _29YdH8 close" onClick={this.props.close}>✕</button> */}
+                        <div className="_32LSmx" style={{marginTop: "100px"}}>
                             <div className="_1XBjg- row">
                                 <div className="Og_iib col col-2-5 _3SWFXF">
                                     <span className="_1hgiYz">
@@ -54,7 +61,7 @@ class LoginSignupPopup extends Component {
                                         <form autoComplete="on" onSubmit={this.handleLogin} >
                                             <div className="_39M2dM JB4AMj">
                                                 <input type="email" name="email" className="_2zrpKA _1dBPDZ" 
-                                                value={this.state.email} onChange={this.handleInputChange} required/>
+                                                value={this.state.email} onChange={this.handleInput} required />
                                                 <span className="s-YM1W"></span>
                                                 <label className="b5konl">
                                                     <span>Enter Email</span>
@@ -62,7 +69,7 @@ class LoginSignupPopup extends Component {
                                             </div>
                                             <div className="_39M2dM JB4AMj">
                                                 <input type="password" name="password" className="_2zrpKA _3v41xv _1dBPDZ"
-                                                value={this.state.password} onChange={this.handleInputChange} required/>
+                                                value={this.state.password} onChange={this.handleInput} required/>
                                                 <span className="s-YM1W"></span>
                                                 <label className="b5konl">
                                                     <span>Enter Password</span>
@@ -73,7 +80,8 @@ class LoginSignupPopup extends Component {
                                                 </a> */}
                                             </div>
                                             <div className="_1avdGP">
-                                                <button className="_2AkmmA _1LctnI _7UHT_c" type="submit">
+                                                <button className="_2AkmmA _1LctnI _7UHT_c" type="submit" 
+                                                onClick={this.handleAdminLogin}>
                                                     <div className="_2VTdOs _1_qmw3">
                                                         <svg className="_2zN0mv" viewBox="25 25 50 50">
                                                             <circle stroke="#fff" className="_1VgS7d" cx="50" cy="50" r="20" fill="none" 
@@ -90,23 +98,11 @@ class LoginSignupPopup extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                {/* </div>
+            </div>     */}
             </div>
         )
-    }    
-}
-
-const mapStateToProps = state => {
-    return{
-        isLoggedIn: state.isLoggedIn,        
-        error: state.error
-    }    
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        loginUserAPI: (x) => dispatch(loginUserAPI(x))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginSignupPopup);
+export default withRouter(AdminLogin)

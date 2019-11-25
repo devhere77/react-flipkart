@@ -1,27 +1,29 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { BASE_URL } from '../../static_data/constants'
 
+const initialState = {
+    prod_name: '',
+    prod_desc: '',
+    prod_type: '',
+    prod_price: '',
+    prod_offer: '',
+    prod_brand: '',
+    prod_disc: '',
+    prod_msg: '',
+    prod_category: '',
+    prod_image: '',
+    imageFile: null,   
+    imageName: '',
+    saveMsg: ''
+}
 
 class AddProduct extends Component {
 
     constructor(props) {
         super(props)
     
-        this.state = {
-            prod_name: '',
-            prod_desc: '',
-            prod_type: '',
-            prod_price: '',
-            prod_offer: '',
-            prod_brand: '',
-            prod_disc: '',
-            prod_msg: '',
-            prod_category: '',
-            prod_image: '',
-            imageFile: null,   
-            imageName: '',
-            saveMsg: ''
-        }
+        this.state = initialState
         
         this.fileHandler = this.fileHandler.bind(this)
         this.addProduct = this.addProduct.bind(this)
@@ -38,7 +40,7 @@ class AddProduct extends Component {
         this.setState({
             imageFile: e.target.files[0],
             imageName: e.target.files[0].name
-        })                
+        })
     }
 
     addProduct = (e) => {
@@ -55,18 +57,21 @@ class AddProduct extends Component {
         data.append('message', this.state.prod_msg);
         data.append('category', this.state.prod_category);
         data.append('file', this.state.imageFile);
-        data.append('filename', this.state.imageName);           
-
-        axios.post("http://localhost:3000/add-product", data)
-        .then(response => { 
-            console.log(response)
+        data.append('filename', this.state.imageName);
+        
+        axios.post(BASE_URL + `add-product?name=${this.state.prod_name}&desc=${this.state.prod_desc}&type=${this.state.prod_type}&price=${this.state.prod_price}&offer=${this.state.prod_offer}&brand=${this.state.prod_brand}&discount=${this.state.prod_disc}&message=${this.state.prod_msg}&category=${this.state.prod_category}&file=${this.state.imageFile}&filename=${this.state.imageName}`)
+        .then(response => {             
             if(response.data === "Success") {  
                 this.setState({saveMsg: "Product Added Successfully"})
             }else{
                 this.setState({saveMsg: "Something Went Wrong!"})
             } 
         })
-        .catch(error => console.log(error))        
+        .catch(error => console.log(error))
+
+        setTimeout(() => {
+            this.setState(initialState)
+        }, 2000)    
     }
 
     render() {
@@ -86,12 +91,12 @@ class AddProduct extends Component {
                                             <div></div>
                                         </div>
                                     </div>
-                                </div>                                             
+                                </div>          
                                 <div>
                                     <form id="myForm" onSubmit={this.addProduct} encType="multipart/form-data">
                                         <div className="_39M2dM JB4AMj">
                                             <input type="text" name="prod_name" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.prod_name} onChange={this.handleChange}/>
+                                            value={this.state.prod_name} onChange={this.handleChange} required/>
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
                                                 <span>Product Name</span>
@@ -99,7 +104,7 @@ class AddProduct extends Component {
                                         </div>
                                         <div className="_39M2dM JB4AMj">
                                             <input type="text" name="prod_desc" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.prod_desc} onChange={this.handleChange}/>
+                                            value={this.state.prod_desc} onChange={this.handleChange} required/>
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
                                                 <span>Description</span>
@@ -107,7 +112,7 @@ class AddProduct extends Component {
                                         </div>
                                         <div className="_39M2dM JB4AMj">
                                             <input type="text" name="prod_type" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.prod_type} onChange={this.handleChange}/>
+                                            value={this.state.prod_type} onChange={this.handleChange} required/>
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
                                                 <span>Product Type</span>                                                
@@ -115,7 +120,7 @@ class AddProduct extends Component {
                                         </div>
                                         <div className="_39M2dM JB4AMj">
                                             <input type="text" name="prod_brand" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.prod_brand} onChange={this.handleChange}/>
+                                            value={this.state.prod_brand} onChange={this.handleChange} required/>
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
                                                 <span>Brand</span>                                                
@@ -131,7 +136,7 @@ class AddProduct extends Component {
                                         </div>                                        
                                         <div className="_39M2dM JB4AMj">
                                             <input type="text" name="prod_disc" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.prod_disc} onChange={this.handleChange}/>
+                                            value={this.state.prod_disc} onChange={this.handleChange} required/>
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
                                                 <span>Discount</span>                                                
@@ -139,7 +144,7 @@ class AddProduct extends Component {
                                         </div>
                                         <div className="_39M2dM JB4AMj">
                                             <select name="prod_category" onChange={this.handleChange} 
-                                             value={this.state.prod_category} className="_2zrpKA _1dBPDZ" >
+                                             value={this.state.prod_category} className="_2zrpKA _1dBPDZ" required>
                                                 <option value="Watches">Watches</option>
                                                 <option value="Jackets">Jackets</option>
                                                 <option value="Helmet">Helmets</option>
@@ -161,6 +166,7 @@ class AddProduct extends Component {
                                                 <option value="Keyboards">Keyboards</option>
                                                 <option value="Guitars">Guitars</option>
                                                 <option value="Storage Devices">Storage Devices</option>
+                                                <option value="Showpiece">Showpiece</option>
                                             </select>                                            
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
@@ -169,7 +175,7 @@ class AddProduct extends Component {
                                         </div>
                                         <div className="_39M2dM JB4AMj">
                                             <input type="text" name="prod_offer" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.prod_offer} onChange={this.handleChange}/>
+                                            value={this.state.prod_offer} onChange={this.handleChange} required/>
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
                                                 <span>Offer</span>                                                
@@ -177,7 +183,7 @@ class AddProduct extends Component {
                                         </div>
                                         <div className="_39M2dM JB4AMj">
                                             <input type="text" name="prod_msg" className="_2zrpKA _1dBPDZ" 
-                                            value={this.state.prod_msg} onChange={this.handleChange}/>
+                                            value={this.state.prod_msg} onChange={this.handleChange} required/>
                                             <span className="s-YM1W"></span>
                                             <label className="b5konl">
                                                 <span>Message on Product</span>                                                
@@ -185,7 +191,7 @@ class AddProduct extends Component {
                                         </div>
                                         <div className="_39M2dM JB4AMj">                                            
                                             <input type="file" name="prod_image" className="_2zrpKA _1dBPDZ" 
-                                             onChange={this.fileHandler}/>
+                                             onChange={this.fileHandler} required/>
                                             {/* <span className="s-YM1W">{this.state.imageName}</span> */}
                                             <label className="b5konl">
                                                 <span>Upload Product Image</span>                                                

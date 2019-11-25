@@ -152,7 +152,7 @@ const setCart = (data, count) => {
 }
 
 const itemsRemoved = (custId, prodId) => {
-    if(custId > 0 && prodId > 0){
+    if(prodId > 0){
         return{
             type: REMOVESINGLEITEM,
             custId: custId,

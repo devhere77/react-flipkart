@@ -4,6 +4,7 @@ import FlipkartLogo from '../../components/FlipkartLogo'
 import SearchComponent from '../../components/SearchComponent'
 import AddProduct from './AddProduct'
 import UserList from './UserList'
+import ProductLink from './ProductLink'
 
 class AdminIndex extends Component {
     render() {
@@ -15,7 +16,7 @@ class AdminIndex extends Component {
                         <div className="_3pNZKl">
                             <FlipkartLogo />
                             <SearchComponent />          
-                            <UserList />                  
+                            <UserList />                            
                         </div>
                         <div className="_1S7OK2"></div>
                     </div>

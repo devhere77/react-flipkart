@@ -10,7 +10,12 @@ class CartComponent extends Component{
     constructor(props) {
         super(props)               
         
-        custId = localStorage.getItem('custId')        
+        custId = localStorage.getItem('custId')
+        if(custId === null){
+            custId = 0
+        }else{
+            custId = custId
+        }  
     }     
 
     componentDidMount(){

@@ -5,6 +5,7 @@ import LoginSignupComponent from './LoginSignupComponent'
 import { connect } from 'react-redux'
 import LogoutComponent from './LogoutComponent'
 import { Link } from 'react-router-dom'
+import FooterComponent from './FooterComponent'
 
 
 let token
@@ -86,6 +87,7 @@ class CartPage extends Component {
                         </div>
                     </div>
                 </div>
+                <FooterComponent />
             </div>    
         )
     }
